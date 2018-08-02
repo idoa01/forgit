@@ -156,6 +156,22 @@ __forgit_ignore_clean() {
     [[ -d $FORGIT_GI_CACHE ]] && rm -rf $FORGIT_GI_CACHE
 }
 
+__forgit_stash() {
+  __forgit_inside_work_tree || return 1
+  local cmd="echo {} |grep -o 'stash@{\d*}' |head -1 | xargs -I% git stash show --no-ext-diff --color=always % $forgit_emojify $forgit_fancy"
+  local found=$(git --no-pager stash list)
+  if [[ -n "$found" ]]; then
+    eval "git --no-pager stash list --no-ext-diff --color=always --format='%C(magenta)%gd %C(auto)%s %C(black)%C(bold)%cr' $@ $forgit_emojify" |
+      __forgit_fzf +s +m --tiebreak index \
+        --bind="enter:execute($cmd |LESS='-R' less)" \
+        --bind="ctrl-a:execute-silent(echo {} |grep -o 'stash@{\d*}' | xargs git stash apply)+abort" \
+        --bind="ctrl-p:execute-silent(echo {} |grep -o 'stash@{\d*}' | xargs git stash pop)+abort" \
+        --preview="$cmd"
+    return
+  fi
+  echo "No stash entries found."
+}
+
 
 alias ${forgit_add:-ga}=__forgit_add
 alias ${forgit_log:-glo}=__forgit_log
@@ -163,3 +179,4 @@ alias ${forgit_diff:-gd}=__forgit_diff
 alias ${forgit_ignore:-gi}=__forgit_ignore
 alias ${forgit_restore:-gcf}=__forgit_restore
 alias ${forgit_clean:-gclean}=__forgit_clean
+alias ${forgit_stash:-gst}=__forgit_stash
