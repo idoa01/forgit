@@ -91,7 +91,7 @@ __forgit_add() {
         grep -e "$added" -e "$changed" -e "$unmerged" |
         awk '{printf "[%10s]  ", $1; $1=""; print $0}' |
         __forgit_fzf -0 -m --nth 2..,.. \
-        --preview="$cmd"
+        --preview="$cmd" |
         cut -d] -f2 |
         sed 's/.* -> //') # for rename case
   [[ -n "$files" ]] && echo "$files" |xargs -I{} git add {} && git status --short && return
