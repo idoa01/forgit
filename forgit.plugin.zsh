@@ -83,11 +83,12 @@ forgit::add() {
     changed=$(forgit::color_to_grep_code "$changed")
     local unmerged=${$(git config color.status.unmerged):-red}
     unmerged=$(forgit::color_to_grep_code "$unmerged")
+    local cmd="git add -N {-1}; git diff --no-ext-diff --color=always -- {-1} $forgit_emojify $forgit_fancy; git reset HEAD {-1} >/dev/null 2>&1"
     local files=$(git -c color.status=always status --short |
         grep -e "$added" -e "$changed" -e "$unmerged" |
         awk '{printf "[%10s]  ", $1; $1=""; print $0}' |
         forgit::fzf -0 -m --nth 2..,.. \
-            --preview="git diff --color=always -- {-1} $forgit_emojify $forgit_fancy" |
+            --preview="$cmd" |
         cut -d] -f2 |
         sed 's/.* -> //') # for rename case
     [[ -n "$files" ]] && echo "$files" |xargs -I{} git add {} && git status --short && return
