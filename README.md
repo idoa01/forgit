@@ -25,7 +25,13 @@ antigen bundle wfxr/forgit
 
 ### Manually
 
-Clone this repo somewhere and source the `forgit.plugin.zsh` at ~/.zshrc or source `forgit.plugin.sh` in ~/.bashrc.
+**zsh**
+
+Clone this repo and source `forgit.plugin.zsh` in `~/.zshrc`.
+
+**bash**
+
+Clone this repo and source `forgit.plugin.sh` in `~/.bashrc`.
 
 ## Commands
 
@@ -33,13 +39,19 @@ Clone this repo somewhere and source the `forgit.plugin.zsh` at ~/.zshrc or sour
 
 Interactive `git add` selector
 
-![screenshot](screenshot-ga.png)
+![screenshot](https://raw.githubusercontent.com/wfxr/i/master/forgit-ga.png)
 
 ### glo
 
 Interactive `git log` browser
 
-![screenshot](screenshot-glo.png)
+![screenshot](https://raw.githubusercontent.com/wfxr/i/master/forgit-glo.png)
+
+### gi
+
+Interactive `.gitignore` generator
+
+![screenshot](https://raw.githubusercontent.com/wfxr/i/master/forgit-gi.png)
 
 ### gd
 
@@ -52,12 +64,6 @@ Interactive `git checkout <file>` selector
 ### gclean
 
 Interactive `git clean` selector
-
-### gi
-
-Interactive `.gitignore` generator
-
-![screenshot](screenshot-gi.png)
 
 ## Default keybinds
 
